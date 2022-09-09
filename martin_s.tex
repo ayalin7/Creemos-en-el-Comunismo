@@ -1,0 +1,87 @@
+\documentclass[../portafolio.tex]{subfiles}
+
+% Solo agregue paquetes en el preámbulo de ../portafolio.tex
+
+\begin{document}
+
+% En esta sección, explique en detalle los siguientes aspectos:
+% - Fecha de realización de la actividad
+% - Título de la actividad (dentro de \section)
+% - Un párrafo explicando cuál es el objetivo de la actividad
+% - Nombre de personas con quien trabajó en la actividad
+% - Una selección de evidencias de que usted hizo esta actividad (imágenes, códigos, respuestas a un problema teórico, etc.)
+% - Una conclusión breve (qué aprendió con la actividad, qué no entendió, qué faltó trabajar, qué recomienda para futuras sesiones)
+
+% Numero máximo de palabras en esta sección: 1000 palabras.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Integración numérica básica}   % ejemplo: Derivadas numéricas , introducción a git , 
+
+\hfill \textbf{Fecha de la actividad:} 02 de septiembre de 2022
+
+\medskip
+
+%---------------------------------------------------------------------------------
+% Introducción/objetivos de la actividad
+En este , la cual practicamos los conocimiento de integracion numerica,
+en particular la regla del punto medio la cual usa el punto del medio entre los limites de integracion
+
+%---------------------------------------------------------------------------------
+% Con quién hizo esta actividad
+Escriba un párrafo simple indicando si hizo la actividad
+individualmente o en grupo. Si lo hizo en grupo, indique los nombres
+de las personas con quien trabajó.
+
+
+%---------------------------------------------------------------------------------
+% Selección de evidencias
+
+Se pide demostrar, 
+\begin{equation}
+\int_{a}^{b} dx f(x) = h f\left(\frac{a+b}{2}\right) + O(h^3) \notag
+\end{equation}
+
+con $h=b-a$ el largo del intervalo.
+
+\medskip
+
+Primero, consideraremos el punto medio entre a y b como $M = (a+b)/2$. Vemos que la expansión en series de Taylor en torno a $M$ de la función $f(x)$ es:
+
+\begin{align}
+   f(x)  & = f(M) + f'(M)(x-M) + \frac{1}{2} f''(M)(x-M)^{2} + \cdots  \\
+         & = f(M) + f'(M)(x-M) + \frac{1}{2} f''(\xi)(x-M)^{2} \label{lol}
+\end{align}
+
+donde $M < \xi < x$. Ahora, al reemplazar $f(x)$ en (\ref{lol}) tenemos que,
+
+\begin{align}
+    \int_{a}^{b} dx f(x) & = \int_{a}^{b}dx f(M) + \int_{a}^{b}dx f'(M)(x-M) + \frac{1}{2} \int_{a}^{b}dx f''(M)(x-M)^{2}   \\
+                         & = f(M)(b-a) + f'(M) \left[ \frac{(x-M)^{2}}{2} \right]_{\;a}^{\;b} + \frac{1}{2} \int_{a}^{b}dx f''(\xi)(x-M)^{2} \label{T}\\
+                         & = f(M)(b-a) + f'(M) \left( \left( \frac{(b-M)^{2}}{2} \right) - \left( \frac{(a-M)^{2}}{2} \right) \right) + \frac{1}{2} \int_{a}^{b}dx f''(\xi)(x-M)^{2}  \\
+                         & = f(M)(b-a) + \frac{1}{2} \int_{a}^{b}dx f''(\xi)(x-M)^{2}
+\end{align}
+
+donde, usando el teorema del valor medio, notamos que existe un valor $a < \eta < b$ tal que,
+
+\begin{align}
+   \int_{a}^{b}dx f(x) & = f(M)(b-a) + \frac{1}{2} f''(\eta) \int_{a}^{b}dx (x-M)^{2} \notag \\
+                       & = f(M)(b-a) + \frac{1}{2} f''(\eta) \left[ \frac{(x-M)^{3}}{3} \right]_{\;a}^{\;b} \notag \\
+                       %= f(M)(b-a) + \frac{1}{6} f''(\eta) \left( (b-M)^{3} - (a-M)^{3} \right)\\
+                       %= f(M)(b-a) + \frac{1}{6} f''...
+                       & = f(M)(b-a) + \frac{1}{6} f''(\eta) \left( \left( \frac{(b-a)^{3}}{8} \right) + \left( \frac{(b-a)^{3}}{8} \right) \right) \notag \\
+                       & = f(M)(b-a) + \frac{1}{24} f''(\eta) h^{3} \label{error}
+\end{align}
+
+vemos que el ultimo termino de (\ref{error}) es un error de orden tres. Por lo que, la expresión final nos queda,
+
+\begin{equation}
+  \int_{a}^{b}dx f(x) = h f\left(\frac{a+b}{2}\right) + O(h^{3})
+\end{equation}
+
+\subsection{Una subsección}
+
+Si cree necesario, puede separar el texto en subsecciones.
+
+
+
+\end{document}
