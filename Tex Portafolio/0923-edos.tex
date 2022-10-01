@@ -59,4 +59,63 @@ As\'i hemos podido reescribir la segunda ecuaci\'on de Lotka-Volterra. Luego, pa
 	\begin{align*}
 		\frac{d \Pi}{d \tau} = \Pi(1- \Delta)
 	\end{align*}
+	
+Para encontrar la soluci\'on a ecuaci\'on diferencial ordinaria (\ref{eq:lotvol1}) y (\ref{eq:lotvol2}), donde $\Pi (0)$ y $\Delta(0)$ que tiene condiciones inciales, ocupamos el codigo \ref{cod:edoin}.
+
+\begin{listing}
+	\begin{pythoncode}
+t = np.arange(0, 40, 0.1)
+h = 0.1 
+
+pi = np.zeros(len(t))
+delta = np.zeros(len(t))
+
+#Condiciones inciales 
+mu = 1
+pi[0] = 0.1
+delta[0] = 5.0
+
+for n in range(len(t)-1):
+    pi[n+1] = pi[n] + h*pi[n]*(1-delta[n])
+    delta[n+1] = delta[n] + h*mu*delta[n]*(pi[n+1]-1)
+    \end{pythoncode}
+    \caption{Algoritmo para resolver Ecuaci\'on Diferencial Ordinaria (\ref{eq:lotvol1}) y (\ref{eq:lotvol2}) con valores inciales}
+	\label{cod:edoin}
+\end{listing}
+
+
+Luego podemos graficar las ecuaciones (\ref{eq:lotvol1}) y (\ref{eq:lotvol2}) en intervalos especificos, $0 \leq t \leq 40$, y condiciones inciales $\mu = 1, \Pi(0) = 1.0 $ y $\Delta(0) = 5.0$. As\'i, graficando obtenemos el gr\'afico \ref{graph:presa-depre}, el codigo para este grafico se encuentra en \href{run:src/lab04.py}{este archivo}. A partir de este gr\'afico podemos notar la relaci\'on en la poblaci\'on de una especie de presa y su correspondiente depredeador, como el incremento de una genera el incremento tard\'io de la otra y como este \'ultimo crecimiento genera una disminuci\'on en la poblaci\'on de la presa.
+
+\begin{figure}
+\centering
+	\includegraphics[scale=0.6]{tex/img/presa-depre.pdf}
+	\caption{Gr\'afico de las funciones dadas en (\ref{eq:lotvol1}) y (\ref{eq:lotvol2}) en intervalos espec\'ificos.}
+	\label{graph:presa-depre}
+\end{figure}
+
+Continuando con el laboratorio podemos graficar como se comporta en funci\'on del tiempo (y durante varios ciclos) las poblaci\'ones de una relaci\'on entre la presa y su depredador, esto lo podemos ver en el gr\'afico \ref{graph:chingon}. Este grafico fue realizado con el codigo que se puede encontrar en \href{run:src/graph-chido-edos.py}{este archivo}.
+
+\begin{figure}
+\centering
+	\includegraphics[scale=0.5]{tex/img/graph-chido.png}
+	\caption{Grafico espacio de fase en la relaci\'on presa depredador}
+	\label{graph:chingon}
+\end{figure}
+
+Finalmente, graficamos la constante que las ecuaciones (\ref{eq:lotvol1}) y (\ref{eq:lotvol2}) nos entregan, la cual esta dada por:
+
+\begin{align}
+	C = \ln \Delta - \Delta + \mu (\ln \Pi - \Pi) \label{eq:cte}
+\end{align}
+
+Ecuaci\'on que vemos en la grafica \ref{eq:cte}. Como podemos ver, se pueden apreciar ciertos peaks en la grafica que nos hacen pensar que no es una constante tan constante como la creemos, sin embargo, en funci\'on que alargamos el intervalo de tiempo esta l\'inea se ir\'a aplanando y tomando la forma de una constante como las solemos conocer.
+
+\begin{figure}
+\centering
+	\includegraphics[scale=0.5]{tex/img/cte.png}
+	\caption{Grafico de la Constante dada en (\ref{eq:cte}).}
+\end{figure}
+
+
+
 \end{document} 

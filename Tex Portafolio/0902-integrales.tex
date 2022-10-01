@@ -30,7 +30,50 @@ Esta actividad la realic\'e de manera individual, definiendo mis funciones y eva
 
 %---------------------------------------------------------------------------------
 % Selección de evidencias
-El codigo utilizado para definir una funci\'on que nos diera como output el resultado de una integral usando el m\'etodo del punto medio esta dado por el codigo~\ref{cod:midpoint}. De esta manera, utilizando dicho codigo pudimos obtener el resultado de la integral que es $22.083231521646834$. Mientras que el resultado de la integral resuelta de manera anal\'itica esta dado por:
+Para demostrar:
+\begin{equation}
+\int_{a}^{b} dx f(x) = h f\left(\frac{a+b}{2}\right) + O(h^3) \label{eq:integralprin}
+\end{equation}
+
+donde $h=b-a$ corresponde al largo del intervalo.
+\medskip
+
+Consideraremos el punto medio entre a y b como $M = (a+b)/2$, donde, la expansión en series de Taylor en torno aal punto $M$ de la función $f(x)$ es:
+
+\begin{align}
+   f(x)  & = f(M) + f'(M)(x-M) + \frac{1}{2} f''(M)(x-M)^{2} + \cdots \notag \\
+         & = f(M) + f'(M)(x-M) + \frac{1}{2} f''(\xi)(x-M)^{2}, \label{eq:expintprin}
+\end{align}
+
+en donde se define $M < \xi < x$. 
+
+\medskip
+
+Ahora, al reemplazar (\ref{eq:expintprin}) en (\ref{eq:integralprin}) tenemos que:
+
+\begin{align*}
+    \int_{a}^{b} dx f(x) & = \int_{a}^{b}dx f(M) + \int_{a}^{b}dx f'(M)(x-M) + \frac{1}{2} \int_{a}^{b}dx f''(M)(x-M)^{2} \\
+                         & = f(M)(b-a) + f'(M) \left[ \frac{(x-M)^{2}}{2} \right]_{\;a}^{\;b} + \frac{1}{2} \int_{a}^{b}dx f''(\xi)(x-M)^{2} \\
+                         & = f(M)(b-a) + f'(M) \left( \left( \frac{(b-M)^{2}}{2} \right) - \left( \frac{(a-M)^{2}}{2} \right) \right) + \frac{1}{2} \int_{a}^{b}dx f''(\xi)(x-M)^{2} \\
+                         & = f(M)(b-a) + \frac{1}{2} \int_{a}^{b}dx f''(\xi)(x-M)^{2} 
+\end{align*}
+
+Luego, utilizando el teorema del valor medio, podemos caer en la existencia de un valor $a < \eta < b$ tal que:
+
+	\begin{align}
+   		\int_{a}^{b}dx f(x) &= f(M)(b-a) + \frac{1}{2} f''(\eta) \int_{a}^{b}dx (x-M)^{2} \notag \\
+        		               &= f(M)(b-a) + \frac{1}{2} f''(\eta) \left[ \frac{(x-M)^{3}}{3} \right]_{\;a}^{\;b} \notag \\
+            		           &= f(M)(b-a) + \frac{1}{6} f''(\eta) \left( \left( \frac{(b-a)^{3}}{8} \right) + \left( \frac{(b-a)^{3}}{8} \right) \right) \notag \\
+                		       &= f(M)(b-a) + \frac{1}{24} f''(\eta) h^{3}. \label{eq:error}
+	\end{align}
+
+Donde el \'ultimo termino de (\ref{eq:error}) corresponde a un error de orden tres, as\'i, la expresión final nos queda como:
+
+\begin{equation}
+	\int_{a}^{b}dx f(x) = h f\left(\frac{a+b}{2}\right) + O(h^{3}). \label{integralfinal}
+\end{equation}
+
+El codigo utilizado para definir una funci\'on que nos diera como output el resultado de una integral usando el m\'etodo del punto medio esta dado por el codigo~\ref{cod:midpoint}. De esta manera, utilizando dicho codigo pudimos obtener el resultado de la integral (\ref{eq:int1}), definida en el codigo \ref{cod:g(x)}, que es $22.083231521646834$. Mientras que el resultado de la integral resuelta de manera anal\'itica esta dado por:
 
 	\begin{align}
 		I = \int_0^3 dx (x-1)e^x \label{eq:int1}
@@ -59,13 +102,34 @@ Finalmente, tendremos que el valor de la integral es
 Luego comparando los resultados del codigo y el resultado anal\'itico, $22.083231521646834$ y $22.086$ vemos que tienen una semejanza, y podemos notar una mayor precisi\'on del metodo del punto medio al momento de calcular integrales.
 \begin{listing}
 	\begin{pythoncode}
-def midpoint_simple(f, a, b):
+def midpoint_simple(g, a, b):
     return (b-a)*f*((a+b)/2)	
 	\end{pythoncode}
 	\caption{M\'etodo del Punto Medio para Integrales}
 	\label{cod:midpoint}
 \end{listing}
 
+\begin{listing}
+	\begin{pythoncode}
+def g(x):
+    return (x-1)*np.exp(x)
+	\end{pythoncode}
+	\caption{Escritura en Python de la integral (\ref{eq:int1})}
+	\label{cod:g(x)}
+\end{listing}
+
+Para integrar (\ref{eq:integralprin}) en una composici\'on de integrales utilizamos \ref{cod:compinte}, de donde la funci\'on \textbf{midpointsimple} esta definida en \ref{cod:midpoint} y la funci\'on \textbf{g} esta definida en (\ref{cod:g(x)}).
+
+\begin{listing}
+	\begin{pythoncode}
+int3 = 0.0
+
+for i in range(len(lim)-1):
+    int3 = int3 + midpoint_simple(g, lim[i], lim[i+1])
+	\end{pythoncode}
+	\caption{Algoritmo para Compocisi\'on de Integrales}
+	\label{cod:compinte}
+\end{listing}
 
 
 \end{document}
