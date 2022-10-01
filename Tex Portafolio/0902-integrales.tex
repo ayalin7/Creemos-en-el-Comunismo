@@ -1,0 +1,71 @@
+\documentclass[../portafolio.tex]{subfiles}
+
+% Solo agregue paquetes en el preámbulo de ../portafolio.tex
+
+\begin{document}
+
+% En esta sección, explique en detalle los siguientes aspectos:
+% - Fecha de realización de la actividad
+% - Título de la actividad (dentro de \section)
+% - Un párrafo explicando cuál es el objetivo de la actividad
+% - Nombre de personas con quien trabajó en la actividad
+% - Una selección de evidencias de que usted hizo esta actividad (imágenes, códigos, respuestas a un problema teórico, etc.)
+% - Una conclusión breve (qué aprendió con la actividad, qué no entendió, qué faltó trabajar, qué recomienda para futuras sesiones)
+
+% Numero máximo de palabras en esta sección: 1000 palabras.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Integraci\'on en Python}   % ejemplo: Derivadas numéricas , introducción a git , 
+
+\hfill \textbf{Fecha de la actividad:} 02 de septiembre de 2022
+
+\medskip
+
+%---------------------------------------------------------------------------------
+% Introducción/objetivos de la actividad
+Para este laboratorio se trabaj\'o el uso de metodos para encontrar \'areas bajo la curva de una funci\'on dada, ocupando diferentes metodos vistos durante el transcurso de la clase, tales como la regla del rectangulo, la regla trapezoidal o la regla del punto medio. Esto definiendo una funcion en python que nos entregue dichos valores.\\
+%---------------------------------------------------------------------------------
+% Con quién hizo esta actividad
+Esta actividad la realic\'e de manera individual, definiendo mis funciones y evaluandolas en los ejercicios correspondientes entregados por el profesor.
+
+%---------------------------------------------------------------------------------
+% Selección de evidencias
+El codigo utilizado para definir una funci\'on que nos diera como output el resultado de una integral usando el m\'etodo del punto medio esta dado por el codigo~\ref{cod:midpoint}. De esta manera, utilizando dicho codigo pudimos obtener el resultado de la integral que es $22.083231521646834$. Mientras que el resultado de la integral resuelta de manera anal\'itica esta dado por:
+
+	\begin{align}
+		I = \int_0^3 dx (x-1)e^x \label{eq:int1}
+	\end{align}
+
+Mientras que el resultado de la integral resuelta de manera anal\'itica esta dado por:
+	
+	\begin{align*}
+		I &= \int_0^3 dx (x-1)e^x \\
+		&= \int_0^3 (e^x x - e^x) dx \\
+		&= \int_0^3 e^x x~dx - \int_0^3 e^x dx \\			
+	\end{align*}
+Luego por integraci\'on por partes tendremos:
+
+	\begin{align*}
+		  &= e^x x\Big|_0^3 -2 \int_0^3 e^x dx \\
+		  &= 3e^3 + ( -2e^x ) \Big|_0^3 \\
+		  &= 3e^3 + (-2e^3)-(-2e^0) \\
+		  &= 3e^3 + 2 - 2e^3 \\
+	\end{align*}
+Finalmente, tendremos que el valor de la integral es 
+
+	\begin{align*}
+				I &= 2 + e^3 \approx 22.086
+	\end{align*}
+Luego comparando los resultados del codigo y el resultado anal\'itico, $22.083231521646834$ y $22.086$ vemos que tienen una semejanza, y podemos notar una mayor precisi\'on del metodo del punto medio al momento de calcular integrales.
+\begin{listing}
+	\begin{pythoncode}
+def midpoint_simple(f, a, b):
+    return (b-a)*f*((a+b)/2)	
+	\end{pythoncode}
+	\caption{M\'etodo del Punto Medio para Integrales}
+	\label{cod:midpoint}
+\end{listing}
+
+
+
+\end{document}

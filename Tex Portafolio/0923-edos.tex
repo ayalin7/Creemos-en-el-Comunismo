@@ -1,0 +1,62 @@
+\documentclass[../portafolio.tex]{subfiles}
+
+% Solo agregue paquetes en el preámbulo de ../portafolio.tex
+
+\begin{document}
+
+% En esta sección, explique en detalle los siguientes aspectos:
+% - Fecha de realización de la actividad
+% - Título de la actividad (dentro de \section)
+% - Un párrafo explicando cuál es el objetivo de la actividad
+% - Nombre de personas con quien trabajó en la actividad
+% - Una selección de evidencias de que usted hizo esta actividad (imágenes, códigos, respuestas a un problema teórico, etc.)
+% - Una conclusión breve (qué aprendió con la actividad, qué no entendió, qué faltó trabajar, qué recomienda para futuras sesiones)
+
+% Numero máximo de palabras en esta sección: 1000 palabras.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Resoluci\'on Numerica de Ecuaciones Diferenciales Ordinarias}   % ejemplo: Derivadas numéricas , introducción a git , 
+
+\hfill \textbf{Fecha de la actividad:} 23 de septiembre de 2022
+
+\medskip
+
+%---------------------------------------------------------------------------------
+% Introducción/objetivos de la actividad
+Durante esta actividad se ense\~n\'o los m\'etodos computacionales para poder encontrar las soluciones de ecuaciones diferenciales ordinarias ocupando dos m\'etodos, el m\'etodo de Euler y el m\'etodo de Euler-Cromer. Lo interesante de resolver ecuaciones diferenciales ordianrias de manera computacional es que el output (resultado) de nuestro codigo no es explicitamente una funci\'on, sino, una colecci\'on de puntos. En la parte de laboratorio nos enfocamos mayoritariamente en el m\'etodo de Euler.
+
+%---------------------------------------------------------------------------------
+% Con quién hizo esta actividad
+Esta actividad la realic\'e con Mart\'in Sepulveda
+%---------------------------------------------------------------------------------
+% Selección de evidencias
+	\subsection{Ejercicio 1}
+		Para la resoluci\'on de este primer ejercicio debemos reescribir las ecuaciones de Lotka-Volterra, las cuales son: 
+			
+			\begin{align}				
+				\frac{dP}{dt} &= \alpha P - \beta PD  \label{eq:lotvol1} \\
+				\frac{dD}{dt} &= - \gamma D + \delta PD \label{eq:lotvol2}
+			\end{align} 
+
+Con el objetivo de poder reescribir la segunda ecuaci\'on de Lotka-Volterra lo que haremos es:
+	\begin{align*}
+		\frac{dD}{dt} \frac{1}{\gamma} &= -D + \Pi D \\
+		\frac{dD}{dt} \frac{1}{\gamma} &= D(\Pi -1)
+	\end{align*}
+Luego tomando $ D = \Delta \frac{\alpha}{\beta}$ tendremos:
+
+	\begin{align*}
+		\frac{d}{dt}\left[ \frac{\Delta \alpha}{\beta} \right] &= \Delta \frac{\alpha}{\beta}~(\Pi - 1) \\
+		\frac{\alpha}{\beta} ~ \frac{d \Delta}{dt} &= \Delta \frac{\alpha}{\beta} ~(\Pi -1) \\
+	\end{align*}
+Recordando que $\tau = \alpha t$, reemplazamos en la \'ultima expresi\'on resultando en:
+	\begin{align*}
+	\frac{d \Delta}{d \tau} &= \frac{1}{\alpha} ~ \Delta ~  (\Pi -1) \\
+	\frac{d \Delta}{d \tau} &= \mu \Delta ~ (\Pi -1) \\
+	\end{align*}
+Donde, en el \'ultimo paso reemplazamos $\frac{1}{\alpha} = \mu$ para poder obtener el resultado mostrado anteriormente. \\
+As\'i hemos podido reescribir la segunda ecuaci\'on de Lotka-Volterra. Luego, para poder reescribir la primera ecuaci\'on (\ref{eq:lotvol2}) seguimos un proceso similar resultando en: 
+	\begin{align*}
+		\frac{d \Pi}{d \tau} = \Pi(1- \Delta)
+	\end{align*}
+\end{document} 

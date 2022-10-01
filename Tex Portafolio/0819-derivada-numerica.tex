@@ -1,0 +1,97 @@
+\documentclass[../portafolio.tex]{subfiles}
+
+% Solo agregue paquetes en el preámbulo de ../portafolio.tex
+
+\begin{document}
+
+% En esta sección, explique en detalle los siguientes aspectos:
+% - Fecha de realización de la actividad
+% - Título de la actividad (dentro de \section)
+% - Un párrafo explicando cuál es el objetivo de la actividad
+% - Nombre de personas con quien trabajó en la actividad
+% - Una selección de evidencias de que usted hizo esta actividad (imágenes, códigos, respuestas a un problema teórico, etc.)
+% - Una conclusión breve (qué aprendió con la actividad, qué no entendió, qué faltó trabajar, qué recomienda para futuras sesiones)
+
+% Numero máximo de palabras en esta sección: 1000 palabras.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Derivadas en Python}   % ejemplo: Derivadas numéricas , introducción a git , 
+
+\hfill \textbf{Fecha de la actividad:} 19 de agosto de 2022
+
+\medskip
+
+%---------------------------------------------------------------------------------
+% Introducción/objetivos de la actividad
+La actividad de hoy se baso en encontrar la derivada n\'umerica de una funci\'on haciendo uso de la programaci\'on en el lenguaje de phyton sin usar la derivada anal\'itica que usamos comunmente.
+Esto mediante las distintas formas, nombradas como la derivada adelantada o la derivada atrasada o la centrada, ocupando metodos matematicos como la serie de Taylor. La actividad, basada en ocupar herramientas tanto n\'umerias a mano como computacionales cumple el objetivo de poder hallar los valores que toma la derivada de una funci\'on previamente definida la cual, al ser una derivada anal\'itica tendr\'a un valor de error asociado.
+%---------------------------------------------------------------------------------
+% Con quién hizo esta actividad
+\\
+Esta actividad la realic\'e en conjunto con Mart\'in Sepulveda.
+
+
+%---------------------------------------------------------------------------------
+% Selección de evidencias
+Para la resoluci\'on de este laboratorio, lo primero que tuvimos que realizar fue demostrar que podemos escribir la segunda derivada adelantada de un funci\'on $f(x)$ como:
+
+	\begin{align}
+	f''(x) &= \frac{f(x+h)-2f(x)+f(x-h)}{h^2} + O(h^2) \label{eq:secderiv}
+	\end{align}
+De la cual podemos definir:
+	\begin{align}
+		f(x+h) &= f(x) + f'(x)h + \frac{1}{2}f''(x)h^2 + \frac{h^3}{3!} f'''(x) + \frac{h^4}{4!} f^{IV}(\xi^+) \label{eq:derivadel} \\
+		f(x-h) &= f(x) - f'(x)h + \frac{1}{2}f''(x)h^2 - \frac{h^3}{3!} f'''(x) + \frac{h^4}{4!} f^{IV}(\xi^-) \label{eq:derivret}
+	\end{align}
+Donde (\ref{eq:derivadel}) corresponde a la expanci\'on en serie de Taylor de la funci\'on $f(x+h)$ y (\ref{eq:derivret}) es la expanci\'on en serie de Taylor de $f(x-h)$, luego sumandolas para luego despejar $f''(x)$. 
+
+\medskip
+Dado que $x<\xi^+<x+h ~ \wedge ~x-h<\xi^- <x$ tendremos que:
+
+	\begin{align*}
+		f(x+h) + f(x-h) &= 2f(x) + f''(x)h^2 + \frac{1}{4!} \left(f^{IV}(\xi^+)h^4 + f^{IV}(\xi^-)h^4 \right) \\
+		f''(x) &= \frac{f(x+h)+f(x-h)-2f(x)}{h^2} - \frac{\frac{1}{4!}f^{IV}(\xi^+) h^4+f^{IV}(\xi^-)h^4}{h^2} 
+	\end{align*}
+A partir de lo ultimo podemos notar que la primera parte de esta \'ultima ecuaci\'on corresponde a la derivada que tenemos que demostrar (\ref{eq:secderiv}), luego consideramos la segunda parte de la ecuaci\'on como parte del error asociado al c\'alculo de la derivada n\'umerica de manera que podemos escribir:
+
+	\begin{align*}
+		-h^2 \frac{\left( f^{IV}(\xi^+) h^4+f^{IV}(\xi^-)h^4 \right) }{4!} &= h^2 \frac{\left( f^{IV}(\xi^+) h^4 - f^{IV}(\xi^-)h^4 \right) }{4!} \\
+		 &= O(h^2)
+	\end{align*}
+
+Continuando con el laboratorio, escribimos la funci\'on \textbf{deriv2} que calcula la segunda derivada de una funci\'on cualquiera, arrojando finalmente el resultado de dicha derivada, el codigo (especificado para un punto en particular pero que podemos cambiar) es \ref{cod:deriv2}.
+
+	\begin{listing}
+		\begin{pythoncode}
+x = [0.1]
+f = np.sqrt(x)
+h = np.geomspace(1,1e-20,3)
+eps = 2**-52
+
+def deriv2(f,x,h):
+    return (f(x+h)-2*f(x)+f(x-h))/h**2 
+
+deriv2 = (np.sqrt(x+h)-2*(np.sqrt(x))+np.sqrt(x-h))/h**2
+deriv2_an = (-1)/(np.sqrt(x))
+error_num = np.abs(deriv2_an - deriv2)
+error_an = 0.24*(h**2)*(np.abs(deriv2_an)) + (4*eps*(np.abs(deriv2_an)))/h**2
+i = np.argmin(error_num)
+h[i]		
+		\end{pythoncode}
+		\caption{Derivada adelantada de $f(x)= \sqrt{x}$ en el punto $x=0.1$}
+		\label{cod:deriv2}
+	\end{listing}
+As\'i, podemos observar que el valor n\'umerico \'optimo que puede tomat $h$ de modo que el error relativo entre la derivada n\'umerica y anal\'itica sea m\'inimo es \textcolor{red}{pone aqui algoooo} , mientras que el valor anal\'itico corresponde a \textcolor{red}{pon algo aqui tamvien}. \\
+
+Para poder mostrar que podemos escribir la primera derivada de una funci\'on $f(x)$ como:
+	\begin{align}
+		f'(x) &= \frac{1}{3} \left[8 \Psi_{h/2}(x) - \Psi_h (x) \right] + O(h^4)
+	\end{align}
+Donde
+	\begin{align}
+		\Psi_h(x) &= \frac{f(x+h)-f(x-h)}{2h} 
+	\end{align}
+Para demostrarlo, realizamos el siguiente procedimiento:
+
+Luego, para poder demostrar la primera y tercera derivada centrada de $f(x)$ seguimos un proceso similar basado en la expansi\'on en Taylor para luego despejar la derivada que estamos buscando.
+\end{document}
